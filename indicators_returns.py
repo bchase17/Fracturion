@@ -49,9 +49,19 @@ def generate_all_features(df):
         df[f'{a}_EMA_{b}'] = (df[f'QQQ_EMA_{a}'] / df[f'QQQ_EMA_{b}']).round(3)
         df[f'{a}_ESMA_{b}'] = (df[f'QQQ_EMA_{a}'] / df[f'QQQ_SMA_{b}']).round(3)
 
+    def round_to_nearest_point05(x):
+        return round(x * 20) / 20  # 1 / 0.05 = 20 steps per unit
+
+    
     for window in [10, 25, 50, 100, 200]:
         df[f'QQQ_SMA_{window}'] = (df['Close'] / df[f'QQQ_SMA_{window}']).round(3)
         df[f'QQQ_EMA_{window}'] = (df['Close'] / df[f'QQQ_EMA_{window}']).round(3)
+        
+        df = df.fillna(0)
+        df = df.replace([np.inf, -np.inf], 0)
+        
+        df[f'QQQ_EMA_{window}_r5'] = df[f'QQQ_EMA_{window}'].apply(round_to_nearest_point05)
+        df[f'QQQ_SMA_{window}_r5'] = df[f'QQQ_SMA_{window}'].apply(round_to_nearest_point05)
 
     # ================
     # RSI Variants
@@ -266,6 +276,40 @@ def generate_all_features(df):
     }
     
     df = pd.concat([df, pd.DataFrame(new_cols, index=df.index)], axis=1)  # one write
+
+    def generate_slope_features(df):
+        slope_windows = [5, 10, 25, 50]
+
+        slope_targets = [
+            'Close', 'RSI_7', 'RSI_14', 'RSI_21', 'MACD', 'Signal_Line', 'CCI_14', 'Williams_%R_14',
+            'OBV', 'OBV_ROC5', 'OBV_ROC10', 'OBV_Z5', 'OBV_Z10', 'CMF_20', 'ADL', 'VROC_5',
+            'Vol_Spike_10', 'Vol_Spike_20', 'Vol_Spike_40', 'Vol_Ratio_10', 'Vol_Ratio_25',
+            'Vol_Ratio_50', 'Vol_Ratio_100', 'ATR_7', 'ATR_14', 'ATR_21', 'plus_DI', 'minus_DI',
+            'ADX', 'VIX', 'VIX_rolling_std', 'VIX_1_change', 'VIX_5_change',
+            'Zscore_5', 'Zscore_10', 'Zscore_25', 'Zscore_50',
+            'Price_Vol_Ratio_5', 'Price_Vol_Ratio_10', 'Price_Vol_Ratio_25'
+        ]
+
+        def fast_slope(series, w):
+            x = np.arange(w)
+            x_mean = x.mean()
+            denominator = ((x - x_mean) ** 2).sum()
+            return (
+                series.rolling(w).apply(
+                    lambda y: ((x - x_mean) * (y - y.mean())).sum() / denominator,
+                    raw=True
+                )
+            )
+
+        slope_features = {}
+        for w in slope_windows:
+            for var in slope_targets:
+                if var in df.columns:
+                    slope_features[f'{var}_slope{w}'] = fast_slope(df[var], w).round(5)
+
+        return pd.concat([df, pd.DataFrame(slope_features, index=df.index)], axis=1)
+    
+    df = generate_slope_features(df)
 
     return df
 
