@@ -1,0 +1,529 @@
+Indicator,Type,Category
+10_EMA_100,Raw,trend_ratio
+10_EMA_200,Raw,trend_ratio
+10_EMA_25,Raw,trend_ratio
+10_EMA_50,Raw,trend_ratio
+10_ESMA_100,Raw,trend_ratio
+10_ESMA_200,Raw,trend_ratio
+10_ESMA_25,Raw,trend_ratio
+10_ESMA_50,Raw,trend_ratio
+10_SMA_100,Raw,trend_ratio
+10_SMA_200,Raw,trend_ratio
+10_SMA_25,Raw,trend_ratio
+10_SMA_50,Raw,trend_ratio
+100_EMA_200,Raw,trend_ratio
+100_ESMA_200,Raw,trend_ratio
+100_SMA_200,Raw,trend_ratio
+25_EMA_100,Raw,trend_ratio
+25_EMA_200,Raw,trend_ratio
+25_EMA_50,Raw,trend_ratio
+25_ESMA_100,Raw,trend_ratio
+25_ESMA_200,Raw,trend_ratio
+25_ESMA_50,Raw,trend_ratio
+25_SMA_100,Raw,trend_ratio
+25_SMA_200,Raw,trend_ratio
+25_SMA_50,Raw,trend_ratio
+50_EMA_100,Raw,trend_ratio
+50_EMA_200,Raw,trend_ratio
+50_ESMA_100,Raw,trend_ratio
+50_ESMA_200,Raw,trend_ratio
+50_SMA_100,Raw,trend_ratio
+50_SMA_200,Raw,trend_ratio
+ADL,Raw,volume
+ADL_EA10,Exponential MA,volume
+ADL_EA25,Exponential MA,volume
+ADL_EA5,Exponential MA,volume
+ADL_EA50,Exponential MA,volume
+ADL_MA10,Simple MA,volume
+ADL_MA25,Simple MA,volume
+ADL_MA5,Simple MA,volume
+ADL_MA50,Simple MA,volume
+ADX,Raw,trend
+ADX_EA10,Exponential MA,trend
+ADX_EA25,Exponential MA,trend
+ADX_EA5,Exponential MA,trend
+ADX_EA50,Exponential MA,trend
+ADX_MA10,Simple MA,trend
+ADX_MA25,Simple MA,trend
+ADX_MA5,Simple MA,trend
+ADX_MA50,Simple MA,trend
+ATR_14,Raw,volatility
+ATR_14_EA10,Exponential MA,volatility
+ATR_14_EA25,Exponential MA,volatility
+ATR_14_EA5,Exponential MA,volatility
+ATR_14_EA50,Exponential MA,volatility
+ATR_14_MA10,Simple MA,volatility
+ATR_14_MA25,Simple MA,volatility
+ATR_14_MA5,Simple MA,volatility
+ATR_14_MA50,Simple MA,volatility
+ATR_21,Raw,volatility
+ATR_21_EA10,Exponential MA,volatility
+ATR_21_EA25,Exponential MA,volatility
+ATR_21_EA5,Exponential MA,volatility
+ATR_21_EA50,Exponential MA,volatility
+ATR_21_MA10,Simple MA,volatility
+ATR_21_MA25,Simple MA,volatility
+ATR_21_MA5,Simple MA,volatility
+ATR_21_MA50,Simple MA,volatility
+ATR_7,Raw,volatility
+ATR_7_EA10,Exponential MA,volatility
+ATR_7_EA25,Exponential MA,volatility
+ATR_7_EA5,Exponential MA,volatility
+ATR_7_EA50,Exponential MA,volatility
+ATR_7_MA10,Simple MA,volatility
+ATR_7_MA25,Simple MA,volatility
+ATR_7_MA5,Simple MA,volatility
+ATR_7_MA50,Simple MA,volatility
+BB_Lower,Raw,volatility
+BB_Lower_EA10,Exponential MA,volatility
+BB_Lower_EA25,Exponential MA,volatility
+BB_Lower_EA5,Exponential MA,volatility
+BB_Lower_EA50,Exponential MA,volatility
+BB_Lower_MA10,Simple MA,volatility
+BB_Lower_MA25,Simple MA,volatility
+BB_Lower_MA5,Simple MA,volatility
+BB_Lower_MA50,Simple MA,volatility
+BB_Mid,Raw,volatility
+BB_Mid_EA10,Exponential MA,volatility
+BB_Mid_EA25,Exponential MA,volatility
+BB_Mid_EA5,Exponential MA,volatility
+BB_Mid_EA50,Exponential MA,volatility
+BB_Mid_MA10,Simple MA,volatility
+BB_Mid_MA25,Simple MA,volatility
+BB_Mid_MA5,Simple MA,volatility
+BB_Mid_MA50,Simple MA,volatility
+BB_Upper,Raw,volatility
+BB_Upper_EA10,Exponential MA,volatility
+BB_Upper_EA25,Exponential MA,volatility
+BB_Upper_EA5,Exponential MA,volatility
+BB_Upper_EA50,Exponential MA,volatility
+BB_Upper_MA10,Simple MA,volatility
+BB_Upper_MA25,Simple MA,volatility
+BB_Upper_MA5,Simple MA,volatility
+BB_Upper_MA50,Simple MA,volatility
+CCI_14,Raw,momentum
+CCI_14_EA10,Exponential MA,momentum
+CCI_14_EA25,Exponential MA,momentum
+CCI_14_EA5,Exponential MA,momentum
+CCI_14_EA50,Exponential MA,momentum
+CCI_14_MA10,Simple MA,momentum
+CCI_14_MA25,Simple MA,momentum
+CCI_14_MA5,Simple MA,momentum
+CCI_14_MA50,Simple MA,momentum
+Close,Exclude,Exclude
+Close_slope10,Slope_10,trend
+Close_slope25,Slope_25,trend
+Close_slope50,Slope_50,trend
+CMF_10,Raw,volume
+CMF_20,Raw,volume
+CMF_20_EA10,Exponential MA,volume
+CMF_20_EA25,Exponential MA,volume
+CMF_20_EA5,Exponential MA,volume
+CMF_20_EA50,Exponential MA,volume
+CMF_20_MA10,Simple MA,volume
+CMF_20_MA25,Simple MA,volume
+CMF_20_MA5,Simple MA,volume
+CMF_20_MA50,Simple MA,volume
+Daily Return,Exclude,Exclude
+Date,Exclude,Exclude
+DownMask,Exclude,Exclude
+DownVolume,Raw,volatility
+High,Exclude,Exclude
+Intraday Change,Raw,volatility
+Intraday Volatility,Raw,volatility
+Liquidity Score,Raw,other
+Low,Exclude,Exclude
+MACD,Raw,momentum
+MACD_EA10,Exponential MA,momentum
+MACD_EA25,Exponential MA,momentum
+MACD_EA5,Exponential MA,momentum
+MACD_EA50,Exponential MA,momentum
+MACD_MA10,Simple MA,momentum
+MACD_MA25,Simple MA,momentum
+MACD_MA5,Simple MA,momentum
+MACD_MA50,Simple MA,momentum
+Max_10_Rows_Since,Raw,duration
+Max_120_Rows_Since,Raw,duration
+Max_30_Rows_Since,Raw,duration
+Max_60_Rows_Since,Raw,duration
+Median Close,Exclude,Exclude
+Median Volume,Exclude,Exclude
+Min_10_Rows_Since,Raw,duration
+Min_120_Rows_Since,Raw,duration
+Min_30_Rows_Since,Raw,duration
+Min_60_Rows_Since,Raw,duration
+minus_DI,Raw,trend
+minus_DI_EA10,Exponential MA,trend
+minus_DI_EA25,Exponential MA,trend
+minus_DI_EA5,Exponential MA,trend
+minus_DI_EA50,Exponential MA,trend
+minus_DI_MA10,Simple MA,trend
+minus_DI_MA25,Simple MA,trend
+minus_DI_MA5,Simple MA,trend
+minus_DI_MA50,Simple MA,trend
+num_days_100,Raw,duration
+num_days_200,Raw,duration
+num_days_50,Raw,duration
+OBV,Raw,volume
+OBV_EA10,Exponential MA,volume
+OBV_EA25,Exponential MA,volume
+OBV_EA5,Exponential MA,volume
+OBV_EA50,Exponential MA,volume
+OBV_MA10,Simple MA,volume
+OBV_MA25,Simple MA,volume
+OBV_MA5,Simple MA,volume
+OBV_MA50,Simple MA,volume
+OBV_ROC10,Rate,momentum
+OBV_ROC10_EA10,Exponential MA,momentum
+OBV_ROC10_EA25,Exponential MA,momentum
+OBV_ROC10_EA5,Exponential MA,momentum
+OBV_ROC10_EA50,Exponential MA,momentum
+OBV_ROC10_MA10,Simple MA,momentum
+OBV_ROC10_MA25,Simple MA,momentum
+OBV_ROC10_MA5,Simple MA,momentum
+OBV_ROC10_MA50,Simple MA,momentum
+OBV_ROC5,Rate,momentum
+OBV_ROC5_EA10,Exponential MA,momentum
+OBV_ROC5_EA25,Exponential MA,momentum
+OBV_ROC5_EA5,Exponential MA,momentum
+OBV_ROC5_EA50,Exponential MA,momentum
+OBV_ROC5_MA10,Simple MA,momentum
+OBV_ROC5_MA25,Simple MA,momentum
+OBV_ROC5_MA5,Simple MA,momentum
+OBV_ROC5_MA50,Simple MA,momentum
+OBV_Z10,Z-Score,volume
+OBV_Z10_EA10,Exponential MA,volume
+OBV_Z10_EA25,Exponential MA,volume
+OBV_Z10_EA5,Exponential MA,volume
+OBV_Z10_EA50,Exponential MA,volume
+OBV_Z10_MA10,Simple MA,volume
+OBV_Z10_MA25,Simple MA,volume
+OBV_Z10_MA5,Simple MA,volume
+OBV_Z10_MA50,Simple MA,volume
+OBV_Z5,Z-Score,volume
+OBV_Z5_EA10,Exponential MA,volume
+OBV_Z5_EA25,Exponential MA,volume
+OBV_Z5_EA5,Exponential MA,volume
+OBV_Z5_EA50,Exponential MA,volume
+OBV_Z5_MA10,Simple MA,volume
+OBV_Z5_MA25,Simple MA,volume
+OBV_Z5_MA5,Simple MA,volume
+OBV_Z5_MA50,Simple MA,volume
+plus_DI,Raw,trend
+plus_DI_EA10,Exponential MA,trend
+plus_DI_EA25,Exponential MA,trend
+plus_DI_EA5,Exponential MA,trend
+plus_DI_EA50,Exponential MA,trend
+plus_DI_MA10,Simple MA,trend
+plus_DI_MA25,Simple MA,trend
+plus_DI_MA5,Simple MA,trend
+plus_DI_MA50,Simple MA,trend
+Price_Vol_Ratio_10,Raw,volatility
+Price_Vol_Ratio_10_EA10,Exponential MA,volatility
+Price_Vol_Ratio_10_EA25,Exponential MA,volatility
+Price_Vol_Ratio_10_EA5,Exponential MA,volatility
+Price_Vol_Ratio_10_EA50,Exponential MA,volatility
+Price_Vol_Ratio_10_MA10,Simple MA,volatility
+Price_Vol_Ratio_10_MA25,Simple MA,volatility
+Price_Vol_Ratio_10_MA5,Simple MA,volatility
+Price_Vol_Ratio_10_MA50,Simple MA,volatility
+Price_Vol_Ratio_25,Raw,volatility
+Price_Vol_Ratio_25_EA10,Exponential MA,volatility
+Price_Vol_Ratio_25_EA25,Exponential MA,volatility
+Price_Vol_Ratio_25_EA5,Exponential MA,volatility
+Price_Vol_Ratio_25_EA50,Exponential MA,volatility
+Price_Vol_Ratio_25_MA10,Simple MA,volatility
+Price_Vol_Ratio_25_MA25,Simple MA,volatility
+Price_Vol_Ratio_25_MA5,Simple MA,volatility
+Price_Vol_Ratio_25_MA50,Simple MA,volatility
+Price_Vol_Ratio_5,Raw,volatility
+Price_Vol_Ratio_5_EA10,Exponential MA,volatility
+Price_Vol_Ratio_5_EA25,Exponential MA,volatility
+Price_Vol_Ratio_5_EA5,Exponential MA,volatility
+Price_Vol_Ratio_5_EA50,Exponential MA,volatility
+Price_Vol_Ratio_5_MA10,Simple MA,volatility
+Price_Vol_Ratio_5_MA25,Simple MA,volatility
+Price_Vol_Ratio_5_MA5,Simple MA,volatility
+Price_Vol_Ratio_5_MA50,Simple MA,volatility
+QQQ_EMA_10,Raw,trend
+QQQ_EMA_10_r5,Rounded,trend_round
+QQQ_EMA_100,Raw,trend
+QQQ_EMA_100_r5,Rounded,trend_round
+QQQ_EMA_200,Raw,trend
+QQQ_EMA_200_r5,Rounded,trend_round
+QQQ_EMA_25,Raw,trend
+QQQ_EMA_25_r5,Rounded,trend_round
+QQQ_EMA_50,Raw,trend
+QQQ_EMA_50_r5,Rounded,trend_round
+QQQ_SMA_10,Raw,trend
+QQQ_SMA_10_r5,Rounded,trend_round
+QQQ_SMA_100,Raw,trend
+QQQ_SMA_100_r5,Rounded,trend_round
+QQQ_SMA_200,Raw,trend
+QQQ_SMA_200_r5,Rounded,trend_round
+QQQ_SMA_25,Raw,trend
+QQQ_SMA_25_r5,Rounded,trend_round
+QQQ_SMA_50,Raw,trend
+QQQ_SMA_50_r5,Rounded,trend_round
+Regime,Raw,other
+Regime_Category,Raw,other
+Rel_Max_10,Raw,trend
+Rel_Max_120,Raw,trend
+Rel_Max_30,Raw,trend
+Rel_Max_60,Raw,trend
+Rel_Min_10,Raw,trend
+Rel_Min_120,Raw,trend
+Rel_Min_30,Raw,trend
+Rel_Min_60,Raw,trend
+Return_10,Exclude,Exclude
+Return_20,Exclude,Exclude
+Return_30,Exclude,Exclude
+Return_45,Exclude,Exclude
+Return_5,Exclude,Exclude
+Return_60,Exclude,Exclude
+Return_90,Exclude,Exclude
+RSI_14,Raw,momentum
+RSI_14_EA10,Exponential MA,momentum
+RSI_14_EA25,Exponential MA,momentum
+RSI_14_EA5,Exponential MA,momentum
+RSI_14_EA50,Exponential MA,momentum
+RSI_14_MA10,Simple MA,momentum
+RSI_14_MA25,Simple MA,momentum
+RSI_14_MA5,Simple MA,momentum
+RSI_14_MA50,Simple MA,momentum
+RSI_14_slope10,Slope_10,momentum
+RSI_14_slope25,Slope_25,momentum
+RSI_14_slope50,Slope_50,momentum
+RSI_21,Raw,momentum
+RSI_21_EA10,Exponential MA,momentum
+RSI_21_EA25,Exponential MA,momentum
+RSI_21_EA5,Exponential MA,momentum
+RSI_21_EA50,Exponential MA,momentum
+RSI_21_MA10,Simple MA,momentum
+RSI_21_MA25,Simple MA,momentum
+RSI_21_MA5,Simple MA,momentum
+RSI_21_MA50,Simple MA,momentum
+RSI_21_slope10,Slope_10,momentum
+RSI_21_slope25,Slope_25,momentum
+RSI_21_slope50,Slope_50,momentum
+RSI_7,Raw,momentum
+RSI_7_EA10,Exponential MA,momentum
+RSI_7_EA25,Exponential MA,momentum
+RSI_7_EA5,Exponential MA,momentum
+RSI_7_EA50,Exponential MA,momentum
+RSI_7_MA10,Simple MA,momentum
+RSI_7_MA25,Simple MA,momentum
+RSI_7_MA5,Simple MA,momentum
+RSI_7_MA50,Simple MA,momentum
+RSI_7_slope10,Slope_10,momentum
+RSI_7_slope25,Slope_25,momentum
+RSI_7_slope50,Slope_50,momentum
+Signal_Line,Raw,momentum
+Signal_Line_EA10,Exponential MA,momentum
+Signal_Line_EA25,Exponential MA,momentum
+Signal_Line_EA5,Exponential MA,momentum
+Signal_Line_EA50,Exponential MA,momentum
+Signal_Line_MA10,Simple MA,momentum
+Signal_Line_MA25,Simple MA,momentum
+Signal_Line_MA5,Simple MA,momentum
+Signal_Line_MA50,Simple MA,momentum
+Typical Price,Exclude,Exclude
+UpMask,Exclude,Exclude
+UpVolume,Raw,volatility
+VIX,Raw,volatility
+VIX_1_change,Raw,volatility
+VIX_1_change_EA10,Exponential MA,volatility
+VIX_1_change_EA25,Exponential MA,volatility
+VIX_1_change_EA5,Exponential MA,volatility
+VIX_1_change_EA50,Exponential MA,volatility
+VIX_1_change_MA10,Simple MA,volatility
+VIX_1_change_MA25,Simple MA,volatility
+VIX_1_change_MA5,Simple MA,volatility
+VIX_1_change_MA50,Simple MA,volatility
+VIX_10_change,Raw,volatility
+VIX_5_change,Raw,volatility
+VIX_5_change_EA10,Exponential MA,volatility
+VIX_5_change_EA25,Exponential MA,volatility
+VIX_5_change_EA5,Exponential MA,volatility
+VIX_5_change_EA50,Exponential MA,volatility
+VIX_5_change_MA10,Simple MA,volatility
+VIX_5_change_MA25,Simple MA,volatility
+VIX_5_change_MA5,Simple MA,volatility
+VIX_5_change_MA50,Simple MA,volatility
+VIX_crossover,Raw,volatility
+VIX_EA10,Exponential MA,volatility
+VIX_EA25,Exponential MA,volatility
+VIX_EA5,Exponential MA,volatility
+VIX_EA50,Exponential MA,volatility
+VIX_MA10,Simple MA,volatility
+VIX_MA25,Simple MA,volatility
+VIX_MA5,Simple MA,volatility
+VIX_MA50,Simple MA,volatility
+VIX_rolling_std,Raw,volatility
+VIX_rolling_std_EA10,Exponential MA,volatility
+VIX_rolling_std_EA25,Exponential MA,volatility
+VIX_rolling_std_EA5,Exponential MA,volatility
+VIX_rolling_std_EA50,Exponential MA,volatility
+VIX_rolling_std_MA10,Simple MA,volatility
+VIX_rolling_std_MA25,Simple MA,volatility
+VIX_rolling_std_MA5,Simple MA,volatility
+VIX_rolling_std_MA50,Simple MA,volatility
+VIX_slope10,Slope_10,volatility
+VIX_slope25,Slope_25,volatility
+VIX_slope50,Slope_50,volatility
+vol_10,Raw,volatility
+vol_10_EA10,Exponential MA,volatility
+vol_10_EA25,Exponential MA,volatility
+vol_10_EA5,Exponential MA,volatility
+vol_10_EA50,Exponential MA,volatility
+vol_10_MA10,Simple MA,volatility
+vol_10_MA25,Simple MA,volatility
+vol_10_MA5,Simple MA,volatility
+vol_10_MA50,Simple MA,volatility
+vol_25,Raw,volatility
+vol_25_EA10,Exponential MA,volatility
+vol_25_EA25,Exponential MA,volatility
+vol_25_EA5,Exponential MA,volatility
+vol_25_EA50,Exponential MA,volatility
+vol_25_MA10,Simple MA,volatility
+vol_25_MA25,Simple MA,volatility
+vol_25_MA5,Simple MA,volatility
+vol_25_MA50,Simple MA,volatility
+vol_5,Raw,volatility
+vol_5_EA10,Exponential MA,volatility
+vol_5_EA25,Exponential MA,volatility
+vol_5_EA5,Exponential MA,volatility
+vol_5_EA50,Exponential MA,volatility
+vol_5_MA10,Simple MA,volatility
+vol_5_MA25,Simple MA,volatility
+vol_5_MA5,Simple MA,volatility
+vol_5_MA50,Simple MA,volatility
+Vol_Ratio_10,Raw,volatility
+Vol_Ratio_10_EA10,Exponential MA,volatility
+Vol_Ratio_10_EA25,Exponential MA,volatility
+Vol_Ratio_10_EA5,Exponential MA,volatility
+Vol_Ratio_10_EA50,Exponential MA,volatility
+Vol_Ratio_10_MA10,Simple MA,volatility
+Vol_Ratio_10_MA25,Simple MA,volatility
+Vol_Ratio_10_MA5,Simple MA,volatility
+Vol_Ratio_10_MA50,Simple MA,volatility
+Vol_Ratio_100,Raw,volatility
+Vol_Ratio_100_EA10,Exponential MA,volatility
+Vol_Ratio_100_EA25,Exponential MA,volatility
+Vol_Ratio_100_EA5,Exponential MA,volatility
+Vol_Ratio_100_EA50,Exponential MA,volatility
+Vol_Ratio_100_MA10,Simple MA,volatility
+Vol_Ratio_100_MA25,Simple MA,volatility
+Vol_Ratio_100_MA5,Simple MA,volatility
+Vol_Ratio_100_MA50,Simple MA,volatility
+Vol_Ratio_25,Raw,volatility
+Vol_Ratio_25_EA10,Exponential MA,volatility
+Vol_Ratio_25_EA25,Exponential MA,volatility
+Vol_Ratio_25_EA5,Exponential MA,volatility
+Vol_Ratio_25_EA50,Exponential MA,volatility
+Vol_Ratio_25_MA10,Simple MA,volatility
+Vol_Ratio_25_MA25,Simple MA,volatility
+Vol_Ratio_25_MA5,Simple MA,volatility
+Vol_Ratio_25_MA50,Simple MA,volatility
+Vol_Ratio_50,Raw,volatility
+Vol_Ratio_50_EA10,Exponential MA,volatility
+Vol_Ratio_50_EA25,Exponential MA,volatility
+Vol_Ratio_50_EA5,Exponential MA,volatility
+Vol_Ratio_50_EA50,Exponential MA,volatility
+Vol_Ratio_50_MA10,Simple MA,volatility
+Vol_Ratio_50_MA25,Simple MA,volatility
+Vol_Ratio_50_MA5,Simple MA,volatility
+Vol_Ratio_50_MA50,Simple MA,volatility
+Vol_Spike_10,Raw,volatility
+Vol_Spike_10_EA10,Exponential MA,volatility
+Vol_Spike_10_EA25,Exponential MA,volatility
+Vol_Spike_10_EA5,Exponential MA,volatility
+Vol_Spike_10_EA50,Exponential MA,volatility
+Vol_Spike_10_MA10,Simple MA,volatility
+Vol_Spike_10_MA25,Simple MA,volatility
+Vol_Spike_10_MA5,Simple MA,volatility
+Vol_Spike_10_MA50,Simple MA,volatility
+Vol_Spike_10_slope10,Slope_10,volatility
+Vol_Spike_10_slope25,Slope_25,volatility
+Vol_Spike_10_slope50,Slope_50,volatility
+Vol_Spike_20,Raw,volatility
+Vol_Spike_20_EA10,Exponential MA,volatility
+Vol_Spike_20_EA25,Exponential MA,volatility
+Vol_Spike_20_EA5,Exponential MA,volatility
+Vol_Spike_20_EA50,Exponential MA,volatility
+Vol_Spike_20_MA10,Simple MA,volatility
+Vol_Spike_20_MA25,Simple MA,volatility
+Vol_Spike_20_MA5,Simple MA,volatility
+Vol_Spike_20_MA50,Simple MA,volatility
+Vol_Spike_20_slope10,Slope_10,volatility
+Vol_Spike_20_slope25,Slope_25,volatility
+Vol_Spike_20_slope50,Slope_50,volatility
+Vol_Spike_40,Raw,volatility
+Vol_Spike_40_EA10,Exponential MA,volatility
+Vol_Spike_40_EA25,Exponential MA,volatility
+Vol_Spike_40_EA5,Exponential MA,volatility
+Vol_Spike_40_EA50,Exponential MA,volatility
+Vol_Spike_40_MA10,Simple MA,volatility
+Vol_Spike_40_MA25,Simple MA,volatility
+Vol_Spike_40_MA5,Simple MA,volatility
+Vol_Spike_40_MA50,Simple MA,volatility
+Vol_Spike_40_slope10,Slope_10,volatility
+Vol_Spike_40_slope25,Slope_25,volatility
+Vol_Spike_40_slope50,Slope_50,volatility
+Volume,Exclude,Exclude
+VROC_10,Rate,momentum
+VROC_3,Rate,momentum
+VROC_5,Rate,momentum
+VROC_5_EA10,Exponential MA,momentum
+VROC_5_EA25,Exponential MA,momentum
+VROC_5_EA5,Exponential MA,momentum
+VROC_5_EA50,Exponential MA,momentum
+VROC_5_MA10,Simple MA,momentum
+VROC_5_MA25,Simple MA,momentum
+VROC_5_MA5,Simple MA,momentum
+VROC_5_MA50,Simple MA,momentum
+Williams_%R_14,Raw,momentum
+Williams_%R_14_EA10,Exponential MA,momentum
+Williams_%R_14_EA25,Exponential MA,momentum
+Williams_%R_14_EA5,Exponential MA,momentum
+Williams_%R_14_EA50,Exponential MA,momentum
+Williams_%R_14_MA10,Simple MA,momentum
+Williams_%R_14_MA25,Simple MA,momentum
+Williams_%R_14_MA5,Simple MA,momentum
+Williams_%R_14_MA50,Simple MA,momentum
+Zscore_10,Raw,volatility
+Zscore_10_EA10,Exponential MA,volatility
+Zscore_10_EA25,Exponential MA,volatility
+Zscore_10_EA5,Exponential MA,volatility
+Zscore_10_EA50,Exponential MA,volatility
+Zscore_10_MA10,Simple MA,volatility
+Zscore_10_MA25,Simple MA,volatility
+Zscore_10_MA5,Simple MA,volatility
+Zscore_10_MA50,Simple MA,volatility
+Zscore_25,Raw,volatility
+Zscore_25_EA10,Exponential MA,volatility
+Zscore_25_EA25,Exponential MA,volatility
+Zscore_25_EA5,Exponential MA,volatility
+Zscore_25_EA50,Exponential MA,volatility
+Zscore_25_MA10,Simple MA,volatility
+Zscore_25_MA25,Simple MA,volatility
+Zscore_25_MA5,Simple MA,volatility
+Zscore_25_MA50,Simple MA,volatility
+Zscore_5,Raw,volatility
+Zscore_5_EA10,Exponential MA,volatility
+Zscore_5_EA25,Exponential MA,volatility
+Zscore_5_EA5,Exponential MA,volatility
+Zscore_5_EA50,Exponential MA,volatility
+Zscore_5_MA10,Simple MA,volatility
+Zscore_5_MA25,Simple MA,volatility
+Zscore_5_MA5,Simple MA,volatility
+Zscore_5_MA50,Simple MA,volatility
+Zscore_50,Raw,volatility
+Zscore_50_EA10,Exponential MA,volatility
+Zscore_50_EA25,Exponential MA,volatility
+Zscore_50_EA5,Exponential MA,volatility
+Zscore_50_EA50,Exponential MA,volatility
+Zscore_50_MA10,Simple MA,volatility
+Zscore_50_MA25,Simple MA,volatility
+Zscore_50_MA5,Simple MA,volatility
+Zscore_50_MA50,Simple MA,volatility

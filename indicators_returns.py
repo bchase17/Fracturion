@@ -56,7 +56,7 @@ def generate_all_features(df):
     for window in [10, 25, 50, 100, 200]:
         df[f'QQQ_SMA_{window}'] = (df['Close'] / df[f'QQQ_SMA_{window}']).round(3)
         df[f'QQQ_EMA_{window}'] = (df['Close'] / df[f'QQQ_EMA_{window}']).round(3)
-        
+
         df = df.fillna(0)
         df = df.replace([np.inf, -np.inf], 0)
         
@@ -84,6 +84,8 @@ def generate_all_features(df):
     ema_slow = df['Close'].ewm(span=26, adjust=False).mean()
     df['MACD'] = (ema_fast - ema_slow).round(3)
     df['Signal_Line'] = df['MACD'].ewm(span=9, adjust=False).mean().round(3)
+    df['MACD'] = (df['MACD'] / df['Close']).round(4)
+    df['Signal_Line'] = (df['Signal_Line'] / df['Close']).round(4)
 
     # ================
     # Bollinger Bands
@@ -92,7 +94,8 @@ def generate_all_features(df):
     bb_std = df['Close'].rolling(window=20).std()
     df['BB_Upper'] = (bb_mid + 2 * bb_std).round(3) / df['Close']
     df['BB_Lower'] = (bb_mid - 2 * bb_std).round(3) / df['Close']
-    df['BB_Mid'] = ((bb_mid * bb_std)/ df['Close']).round(3)
+    df['BB_Mid_raw'] = (bb_mid * bb_std / df['Close'])
+    df['BB_Mid'] = ((df['BB_Mid_raw'] - df['BB_Mid_raw'].rolling(42).mean()) / df['BB_Mid_raw'].rolling(42).std()).round(3)
 
     # ================
     # VOLUME
@@ -106,6 +109,8 @@ def generate_all_features(df):
     for w in windows:
         df[f'OBV_ROC{w}'] = df['OBV'].pct_change(periods=w).round(3)
         df[f'OBV_Z{w}'] = ((df['OBV'] - df['OBV'].rolling(w).mean()) / df['OBV'].rolling(w).std()).round(3)
+
+    df['OBV'] = (df['OBV'] - df['OBV'].rolling(42).mean()) / df['OBV'].rolling(42).std()
     
     df['UpMask'] = df['Close'] > df['Close'].shift(1)
     df['DownMask'] = df['Close'] < df['Close'].shift(1)
@@ -113,15 +118,18 @@ def generate_all_features(df):
     df['DownVolume'] = df['Volume'] * df['DownMask']
     windows = [10, 25, 50, 100]
     #df = calculate_obv_volume_ratio(df, windows)
+    z = 42
     for w in windows:
         up = df['UpVolume'].rolling(w).sum()
         down = df['DownVolume'].rolling(w).sum()
 
         ratio = up / down.replace(0, np.nan)
-        ratio.fillna(1_000_000, inplace=True)  # Up-only
-        ratio[df['UpVolume'].rolling(w).sum() == 0] = 0  # Down-only
+        ratio.fillna(0, inplace=True)
+        ratio[up == 0] = 0  # More direct than re-rolling
 
         df[f'Vol_Ratio_{w}'] = ratio.round(3)
+        df[f'Vol_Ratio_{w}'] = ((ratio - ratio.rolling(z).mean()) / ratio.rolling(z).std()).round(3)
+
 
     # Chaikin Money Flow (CMF)
     def CMF(data, period=20):
@@ -148,6 +156,8 @@ def generate_all_features(df):
     mfm = ((df['Close'] - df['Low']) - (df['High'] - df['Close'])) / (df['High'] - df['Low'])
     mfm = mfm.replace([np.inf, -np.inf], 0).fillna(0)
     df['ADL'] = (mfm * df['Volume']).cumsum().round(3)
+    df['ADL'] = (df['ADL'] - df['ADL'].rolling(42).mean()) / df['ADL'].rolling(42).std()
+
 
     # ================
     # ATR
@@ -160,6 +170,7 @@ def generate_all_features(df):
     windows = [7, 14, 21]
     for w in windows:
         df[f'ATR_{w}'] = tr.rolling(w).mean().round(1)
+        df[f'ATR_{w}'] = (df[f'ATR_{w}'] - df[f'ATR_{w}'].rolling(42).mean()) / df[f'ATR_{w}'].rolling(42).std()
 
     # ================
     # ADX & DI
@@ -188,9 +199,9 @@ def generate_all_features(df):
     # ================
     # Volatility
     # ================
-    vol_5 = df['Close'].rolling(window=5).std().round(3)
-    vol_10 = df['Close'].rolling(window=10).std().round(3)
-    vol_25 = df['Close'].rolling(window=25).std().round(3)
+    vol_5 = df['Close'].pct_change().rolling(window=5).std().round(3)
+    vol_10 = df['Close'].pct_change().rolling(window=10).std().round(3)
+    vol_25 = df['Close'].pct_change().rolling(window=25).std().round(3)
 
     new_cols = {
         'vol_5': vol_5,
@@ -202,6 +213,20 @@ def generate_all_features(df):
     }
 
     df = pd.concat([df, pd.DataFrame(new_cols, index=df.index)], axis=1)
+
+    # Z-score normalize each
+    for w in [5, 10, 25]:
+        vol_col = f'vol_{w}'
+        df[f'{vol_col}'] = (
+            (df[vol_col] - df[vol_col].rolling(42).mean()) /
+            df[vol_col].rolling(42).std()
+        ).replace([np.inf, -np.inf], 0).fillna(0).round(3)
+
+        pvol_col = f'Price_Vol_Ratio_{w}'
+        df[f'{pvol_col}'] = (
+            (df[pvol_col] - df[pvol_col].rolling(42).mean()) /
+            df[pvol_col].rolling(42).std()
+        ).replace([np.inf, -np.inf], 0).fillna(0).round(3)
 
     # ================
     # VIX External Data
@@ -278,37 +303,30 @@ def generate_all_features(df):
     df = pd.concat([df, pd.DataFrame(new_cols, index=df.index)], axis=1)  # one write
 
     def generate_slope_features(df):
-        slope_windows = [5, 10, 25, 50]
+        slope_windows = [10, 25, 50]
 
         slope_targets = [
-            'Close', 'RSI_7', 'RSI_14', 'RSI_21', 'MACD', 'Signal_Line', 'CCI_14', 'Williams_%R_14',
-            'OBV', 'OBV_ROC5', 'OBV_ROC10', 'OBV_Z5', 'OBV_Z10', 'CMF_20', 'ADL', 'VROC_5',
-            'Vol_Spike_10', 'Vol_Spike_20', 'Vol_Spike_40', 'Vol_Ratio_10', 'Vol_Ratio_25',
-            'Vol_Ratio_50', 'Vol_Ratio_100', 'ATR_7', 'ATR_14', 'ATR_21', 'plus_DI', 'minus_DI',
-            'ADX', 'VIX', 'VIX_rolling_std', 'VIX_1_change', 'VIX_5_change',
-            'Zscore_5', 'Zscore_10', 'Zscore_25', 'Zscore_50',
-            'Price_Vol_Ratio_5', 'Price_Vol_Ratio_10', 'Price_Vol_Ratio_25'
-        ]
+            'Close', 'RSI_7', 'RSI_14', 'RSI_21', 'Vol_Spike_10', 'Vol_Spike_20', 'Vol_Spike_40', 'VIX']
 
-        def fast_slope(series, w):
+        def fast_slope_normalized(series, w):
             x = np.arange(w)
             x_mean = x.mean()
             denominator = ((x - x_mean) ** 2).sum()
-            return (
-                series.rolling(w).apply(
-                    lambda y: ((x - x_mean) * (y - y.mean())).sum() / denominator,
-                    raw=True
-                )
+            return series.rolling(w).apply(
+                lambda y: ((x - x_mean) * ((y / y[0]) - (y / y[0]).mean())).sum() / denominator
+                if y[0] != 0 else np.nan,
+                raw=True
             )
 
         slope_features = {}
         for w in slope_windows:
             for var in slope_targets:
                 if var in df.columns:
-                    slope_features[f'{var}_slope{w}'] = fast_slope(df[var], w).round(5)
+                    slope_features[f'{var}_slope{w}'] = fast_slope_normalized(df[var], w).round(5)
 
         return pd.concat([df, pd.DataFrame(slope_features, index=df.index)], axis=1)
-    
+
+    # Usage
     df = generate_slope_features(df)
 
     return df
