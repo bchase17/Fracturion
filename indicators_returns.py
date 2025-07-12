@@ -356,7 +356,7 @@ def regime(df_sma_returns):
     return df_sma
 
 def final_df(ticker, returns, lb):
-
+    
     # Define the ticker symbol
     tickerSymbol = ticker
 
