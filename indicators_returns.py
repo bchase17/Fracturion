@@ -387,15 +387,11 @@ def final_df(ticker, returns, lb):
     df_sma_clean = df_sma_clean.sort_index(ascending=True)
 
     def add_column_based_on_future_value(df, days):
+
         future_return = (df['Close'].shift(-days) - df['Close']) / df['Close']
 
-        if days >= 15:
-            df[f'Return_{days}'] = np.where(
-                future_return > 0.00, 1,
-                np.where(future_return < -0.00, 0, np.nan)
-            )
-        else:
-            df[f'Return_{days}'] = (future_return > 0).astype(int)
+        df[f'Return%_{days}'] = (future_return * 100).round(1) 
+        df[f'Return_{days}'] = (future_return > 0).astype(int)
 
         return df
 
