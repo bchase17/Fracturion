@@ -272,36 +272,6 @@ def generate_all_features(df):
         df[f'Zscore_{z}'] = ((df['Close'] - df['Close'].rolling(z).mean()) / df['Close'].rolling(z).std()).round(3)
         df[f'Zscore_{z}'] = df[f'Zscore_{z}'].replace([np.inf, -np.inf], np.nan)
 
-    # ================
-    # Convert All Non-Binary Variables into moving averages
-    # ================
-    windows   = [5, 10, 25, 50]
-    
-    temporal_targets = ['RSI_7', 'RSI_14', 'RSI_21', 'MACD', 'Signal_Line', 'CCI_14', 'Williams_%R_14', 'BB_Upper', 'BB_Lower', 'BB_Mid',
-    'OBV', 'OBV_ROC5', 'OBV_ROC10', 'OBV_Z5', 'OBV_Z10', 'CMF_20', 'ADL', 'VROC_5', 'Vol_Spike_10', 'Vol_Spike_20',
-    'Vol_Spike_40', 'Vol_Ratio_10', 'Vol_Ratio_25', 'Vol_Ratio_50', 'Vol_Ratio_100', 'ATR_7', 'ATR_14', 'ATR_21',
-    'vol_5', 'vol_10', 'vol_25', 'Price_Vol_Ratio_5', 'Price_Vol_Ratio_10', 'Price_Vol_Ratio_25', 'plus_DI', 'minus_DI',
-    'ADX', 'VIX', 'VIX_rolling_std', 'VIX_1_change', 'VIX_5_change', 'Zscore_5', 'Zscore_10', 'Zscore_25', 'Zscore_50']
-
-    # dict‑comp to build every new Series, then concat once
-    # Simple Moving Average
-    new_cols = {
-        f'{var}_MA{w}': df[var].rolling(w).mean().div(df[var])
-        for w in windows
-        for var in temporal_targets
-    }
-
-    df = pd.concat([df, pd.DataFrame(new_cols, index=df.index)], axis=1)  # one write
-
-    # Exponential Moving Average
-    new_cols = {
-        f'{var}_EA{w}': df[var].ewm(span=w, adjust=False).mean().div(df[var])
-        for w in windows
-        for var in temporal_targets
-    }
-    
-    df = pd.concat([df, pd.DataFrame(new_cols, index=df.index)], axis=1)  # one write
-
     def generate_slope_features(df):
         slope_windows = [10, 25, 50]
 
@@ -397,6 +367,7 @@ def final_df(ticker, returns, lb):
 
     # Apply return logic for each target horizon
     for r in returns:
+
         df_sma_returns = add_column_based_on_future_value(df_sma_clean, r)
 
     df_sma_returns = df_sma_returns.sort_index(ascending=False)
