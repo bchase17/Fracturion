@@ -15,21 +15,10 @@ def generate_all_features(df):
     for window in [10, 25, 50, 100, 200]:
         df[f'QQQ_SMA_{window}'] = df['Close'].rolling(window=window).mean()
         df[f'QQQ_EMA_{window}'] = df['Close'].ewm(span=window, adjust=False).mean()
-
         if window in (50, 100, 200):
             df[f'num_days_{window}'] = 0
 
-    lag_periods = [50, 100, 200]
-    ma_cols = ['QQQ_SMA_10', 'QQQ_SMA_25', 'QQQ_SMA_50', 'QQQ_SMA_100', 'QQQ_SMA_200']
-    
-    df = df.sort_index(ascending=False)
-    for lag in lag_periods:
-
-        for col, name in zip(ma_cols, ma_cols):
-
-            df[f'{name}_L{lag}'] = (df[col] / df[col].shift(-lag)).round(2)
-    df = df.sort_index(ascending=True)
-
+    """
     for window in [50, 100, 200]:
         for i in range(1, len(df)):
             prev = df.loc[i - 1, f'num_days_{window}']
@@ -43,6 +32,7 @@ def generate_all_features(df):
                 df.loc[i, f'num_days_{window}'] = 0
 
         df[f'num_days_{window}'] = df[f'num_days_{window}'].apply(lambda x: int(5 * round(x / 5)))
+    """
 
     # ============================
     # Relative Position Features
@@ -57,23 +47,21 @@ def generate_all_features(df):
         df[f'Min_{window}_Rows_Since'] = df['Low'].rolling(window=window).apply(rows_since_min, raw=True)
 
     for a, b in [(50, 100), (50, 200), (100, 200), (10, 25), (10, 50), (10, 100), (10, 200), (25, 50), (25, 100), (25, 200)]:
-        df[f'{a}_SMA_{b}'] = (df[f'QQQ_SMA_{a}'] / df[f'QQQ_SMA_{b}']).round(3)
-        df[f'{a}_EMA_{b}'] = (df[f'QQQ_EMA_{a}'] / df[f'QQQ_EMA_{b}']).round(3)
-        df[f'{a}_ESMA_{b}'] = (df[f'QQQ_EMA_{a}'] / df[f'QQQ_SMA_{b}']).round(3)
+        df[f'{a}_SMA_{b}_ratio'] = (df[f'QQQ_SMA_{a}'] / df[f'QQQ_SMA_{b}']).round(3)
+        df[f'{a}_EMA_{b}_ratio'] = (df[f'QQQ_EMA_{a}'] / df[f'QQQ_EMA_{b}']).round(3)
+        df[f'{a}_ESMA_{b}_ratio'] = (df[f'QQQ_EMA_{a}'] / df[f'QQQ_SMA_{b}']).round(3)
 
+    """
     def round_to_nearest_point05(x):
         return round(x * 20) / 20  # 1 / 0.05 = 20 steps per unit
-
+    """
     
     for window in [10, 25, 50, 100, 200]:
-        df[f'QQQ_SMA_{window}'] = (df['Close'] / df[f'QQQ_SMA_{window}']).round(3)
-        df[f'QQQ_EMA_{window}'] = (df['Close'] / df[f'QQQ_EMA_{window}']).round(3)
+        df[f'QQQ_SMA_{window}_ratio'] = (df['Close'] / df[f'QQQ_SMA_{window}']).round(3)
+        df[f'QQQ_EMA_{window}_ratio'] = (df['Close'] / df[f'QQQ_EMA_{window}']).round(3)
 
         df = df.fillna(0)
         df = df.replace([np.inf, -np.inf], 0)
-        
-        df[f'QQQ_EMA_{window}_r5'] = df[f'QQQ_EMA_{window}'].apply(round_to_nearest_point05)
-        df[f'QQQ_SMA_{window}_r5'] = df[f'QQQ_SMA_{window}'].apply(round_to_nearest_point05)
 
     # ================
     # RSI Variants
@@ -309,7 +297,7 @@ def generate_all_features(df):
         return pd.concat([df, pd.DataFrame(slope_features, index=df.index)], axis=1)
 
     # Usage
-    df = generate_slope_features(df)
+    #df = generate_slope_features(df)
 
     return df
 
