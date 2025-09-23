@@ -19,7 +19,7 @@ def generate_all_features(df):
         if window in (50, 100, 200):
             df[f'num_days_{window}'] = 0
 
-    lag_periods = [50, 100, 200]
+    lag_periods = [50, 100, 150, 200]
     ma_cols = ['QQQ_SMA_10', 'QQQ_SMA_25', 'QQQ_SMA_50', 'QQQ_SMA_100', 'QQQ_SMA_200']
     
     df = df.sort_index(ascending=False)
@@ -27,7 +27,7 @@ def generate_all_features(df):
 
         for col, name in zip(ma_cols, ma_cols):
 
-            df[f'{name}_L{lag}'] = (df[col] / df[col].shift(-lag)).round(2)
+            df[f'{name}_Lag{lag}'] = (df[col] / df[col].shift(-lag)).round(2)
     df = df.sort_index(ascending=True)
 
     for window in [50, 100, 200]:
