@@ -28,6 +28,7 @@ def generate_all_features(df):
         for col, name in zip(ma_cols, ma_cols):
 
             df[f'{name}_Lag{lag}'] = (df[col] / df[col].shift(-lag)).round(2)
+            
     df = df.sort_index(ascending=True)
 
     for window in [50, 100, 200]:
@@ -243,7 +244,7 @@ def generate_all_features(df):
     # ================
     # VIX External Data
     # ================
-    vix_data = yf.Ticker("^VXN").history(period='1d', start='2005-03-10')
+    vix_data = yf.Ticker("^VXN").history(period="max", interval="1d", auto_adjust=True)
     # Resetting the index will turn the Date index into a column
     vix_data = vix_data.reset_index()[['Date', 'Close', 'High', 'Low', 'Volume']]
     # Convert the Date column to 'YYYY-MM-DD' format (if not already)
@@ -337,16 +338,16 @@ def regime(df_sma_returns):
 
     return df_sma
 
-def final_df(ticker, returns, lb):
+def final_df(ticker, returns):
     
     # Define the ticker symbol
     tickerSymbol = ticker
 
     # Get data on this ticker
     tickerData = yf.Ticker(tickerSymbol)
-    start_date = (datetime.today() - relativedelta(years=lb)).strftime('%Y-%m-%d')
+    #start_date = (datetime.today() - relativedelta(years=lb)).strftime('%Y-%m-%d')
 
-    tickerDf = tickerData.history(period='1d', start=start_date)
+    tickerDf = tickerData.history(period="max", interval="1d", auto_adjust=True)
     
     # Resetting the index will turn the Date index into a column
     df_sma = tickerDf.reset_index()[['Date', 'Close', 'High', 'Low', 'Volume']]
@@ -354,6 +355,32 @@ def final_df(ticker, returns, lb):
     # Convert the Date column to 'YYYY-MM-DD' format (if not already)
     df_sma['Date'] = pd.to_datetime(df_sma['Date']).dt.strftime('%Y-%m-%d')
     #df_sma = pd.concat([df_sma, pd.DataFrame([main_row])], ignore_index=True)
+
+    def add_column_based_on_future_value(df, days):
+
+        df = df.sort_index(ascending=True)
+        future_return = (df['Close'].shift(-days) - df['Close']) / df['Close']
+        df[f'Return%_{days}'] = (future_return * 100).round(1) 
+        df[f'Return_{days}'] = (future_return > 0).astype(int)
+        
+        past_return = (df['Close'] - df['Close'].shift(days)) / df['Close']
+        df[f'Past_Return_{days}'] = (past_return > 0).astype(int)
+
+        return df
+
+    # Apply return logic for each target horizon
+    for r in returns:
+
+        df_sma = add_column_based_on_future_value(df_sma, r)
+
+    windows = [50, 100, 200]
+    periods = [5, 10, 25, 35]
+
+    for p in periods:
+
+        for window in windows:
+
+            df_sma[f'wr_{window}_{p}'] = df_sma[f"Past_Return_{p}"].sort_index(ascending=True).rolling(window).sum() / window
 
     df_sma = generate_all_features(df_sma)
     df_sma = regime(df_sma)
@@ -366,22 +393,5 @@ def final_df(ticker, returns, lb):
     df_sma = df_sma.dropna()
     df_sma_clean = df_sma.copy()
     df_sma_clean = pd.DataFrame(df_sma_clean)
-    df_sma_clean = df_sma_clean.sort_index(ascending=True)
 
-    def add_column_based_on_future_value(df, days):
-
-        future_return = (df['Close'].shift(-days) - df['Close']) / df['Close']
-
-        df[f'Return%_{days}'] = (future_return * 100).round(1) 
-        df[f'Return_{days}'] = (future_return > 0).astype(int)
-
-        return df
-
-    # Apply return logic for each target horizon
-    for r in returns:
-
-        df_sma_returns = add_column_based_on_future_value(df_sma_clean, r)
-
-    df_sma_returns = df_sma_returns.sort_index(ascending=False)
-
-    return df_sma_returns
+    return df_sma_clean.sort_index(ascending=False)
