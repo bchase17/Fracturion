@@ -263,7 +263,10 @@ def generate_all_features(df):
     vix_data['VIX_10_change'] = vix_data['VIX'].pct_change(periods=10).round(3)
 
     df = pd.merge(df, vix_data[['Date', 'VIX', 'VIX_rolling_std', 'VIX_crossover', 'VIX_5_change', 'VIX_1_change', 'VIX_10_change']],
-                    on='Date', how='inner')
+                    on='Date', how='left')
+    
+    vix_cols = [col for col in df.columns if col.startswith('VIX')]
+    df[vix_cols] = df[vix_cols].ffill()
 
     # ================
     # Experimental Features
