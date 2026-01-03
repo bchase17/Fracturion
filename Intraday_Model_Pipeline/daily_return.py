@@ -1,16 +1,6 @@
 import numpy as np
 import pandas as pd
 import yfinance as yf
-from sklearn.metrics import matthews_corrcoef, precision_score
-from sklearn.model_selection import RandomizedSearchCV, train_test_split, StratifiedKFold, TimeSeriesSplit
-from xgboost import XGBClassifier
-import pickle
-from sklearn.inspection import permutation_importance
-import matplotlib.pyplot as plt
-from hmmlearn.hmm import GaussianHMM
-import re
-import itertools
-import time
 import warnings
 warnings.filterwarnings("ignore", module="joblib")
 

@@ -1,16 +1,5 @@
 import numpy as np
 import pandas as pd
-import yfinance as yf
-from sklearn.metrics import matthews_corrcoef, precision_score
-from sklearn.model_selection import RandomizedSearchCV, train_test_split, StratifiedKFold, TimeSeriesSplit
-from xgboost import XGBClassifier
-import pickle
-from sklearn.inspection import permutation_importance
-import matplotlib.pyplot as plt
-from hmmlearn.hmm import GaussianHMM
-import re
-import itertools
-import time
 import warnings
 warnings.filterwarnings("ignore", module="joblib")
 import databento as db
@@ -68,18 +57,21 @@ def min_features():
         # Minutes since open (can be negative pre-market, positive post-open)
         out["time_to_open"] = out["_tod_minutes"] - open_min
         out["time_to_close"] = (open_min + out["session_duration"]) - out["_tod_minutes"]
+        
+        out["session_simple"] = "post_market"
 
-        # Column 1: simple session label
-        out["session_simple"] = np.select(
-            [
-                out["_tod_minutes"] < premarket_min,
-                (out["_tod_minutes"] >= premarket_min) & (out["_tod_minutes"] < open_min),
-                (out["_tod_minutes"] >= open_min) & (out["_tod_minutes"] <= (open_min + out["session_duration"])),
-                out["_tod_minutes"] > (open_min + out["session_duration"]),
-            ],
-            ["overnight", "pre_market", "open_market", "post_market"],
-            default=np.nan
-        )
+        out.loc[out["_tod_minutes"] < premarket_min, "session_simple"] = "overnight"
+
+        out.loc[
+            (out["_tod_minutes"] >= premarket_min) & (out["_tod_minutes"] < open_min),
+            "session_simple"
+        ] = "pre_market"
+
+        out.loc[
+            (out["_tod_minutes"] >= open_min) &
+            (out["_tod_minutes"] <= open_min + out["session_duration"]),
+            "session_simple"
+        ] = "open_market"
 
         # Column 2: detailed session label (your buckets)
         out["session_detail"] = np.select(
