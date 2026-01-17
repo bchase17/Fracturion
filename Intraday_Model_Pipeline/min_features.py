@@ -281,4 +281,22 @@ def min_features():
 
     df_features_final = pd.merge(session_counts_final, df_maxmin, how='inner', on='Date')
 
+    close_cols = df_features_final.columns[(df_features_final.columns.str.contains("close_")) | 
+                                           (df_features_final.columns.str.contains("post_")) | 
+                                           (df_features_final.columns.str.contains("overnight_"))].to_list()
+    ave_cols = (
+        df_features_final
+        .loc[:, ~df_features_final.columns.isin(close_cols)]  # drop close_ columns
+        .iloc[:, 1:]                               # drop first column
+        .columns
+        .to_list()
+    )
+    cols = [c for c in ave_cols if c != "Date"]
+
+    df_features_final[[f"{c}_roll3" for c in cols]] = (
+        df_features_final[cols]
+        .rolling(window=3, min_periods=1)   # use min_periods=3 if you want NaN until 3 days exist
+        .mean()
+    )
+
     return df_features_final
