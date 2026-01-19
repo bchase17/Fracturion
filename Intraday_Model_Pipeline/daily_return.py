@@ -290,11 +290,10 @@ def vix_skew(df):
     vix_cols = [col for col in df.columns if col.startswith('VIX')]
     df[vix_cols] = df[vix_cols].ffill()
     
-    """
     # ================
     # SKEW External Data
     # ================
-    skew_data = yf.Ticker("^VXN").history(period="max", interval="1d", auto_adjust=True)
+    skew_data = yf.Ticker("^SKEW").history(period="max", interval="1d", auto_adjust=True)
     # Resetting the index will turn the Date index into a column
     skew_data = skew_data.reset_index()[['Date', 'Close', 'High', 'Low', 'Volume']]
     # Convert the Date column to 'YYYY-MM-DD' format (if not already)
@@ -317,7 +316,6 @@ def vix_skew(df):
     
     skew_cols = [col for col in df.columns if col.startswith('skew')]
     df[skew_cols] = df[skew_cols].ffill()
-    """
 
     return df
 
