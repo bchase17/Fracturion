@@ -418,7 +418,7 @@ def pull_daily(ticker, returns):
     experimental_slop_df = experimental_slop(df_orig)
     experimental_slop_cols = generate_col_list(experimental_slop_df)
 
-    feature_sets = [ma_df, volume_df, vix_skew_df]
+    feature_sets = [ma_df, volume_df, vix_skew_df, rsi_macd_df]
 
     # merge returns and features table into one df
     df_merged = pd.merge(ma_df, df_returns[[col for col in df_returns.columns if col.startswith('Return')] + ['Date']], on='Date') 
