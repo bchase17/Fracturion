@@ -305,7 +305,7 @@ def vix_skew(df):
 
     return df
 
-def experimental_slop(df):
+def experimental_slope(df):
 
     df = df.sort_values(by='Date', ascending=True)
     
@@ -431,10 +431,21 @@ def pull_daily(ticker, returns):
     volatility_cols = generate_col_list(volatility_df)
     vix_skew_df = vix_skew(df_orig)
     vix_skew_cols = generate_col_list(vix_skew_df)
-    experimental_slop_df = experimental_slop(df_orig)
-    experimental_slop_cols = generate_col_list(experimental_slop_df)
+    experimental_slope_df = experimental_slope(df_orig)
+    experimental_slope_cols = generate_col_list(experimental_slope_df)
 
-    feature_sets = [ma_df, volume_df, macd_df, atr_adx_df]
+    feature_sets = [ma_df, rsi_df, macd_df, volume_df, atr_adx_df, volatility_df, 
+                    vix_skew_df, experimental_slope_df]
+    feature_cols = {
+    "ma": ma_cols,
+    "rsi": rsi_cols,
+    "macd": macd_cols,
+    "volume": volume_cols,
+    "atr_adx": atr_adx_cols,
+    "volatility": volatility_cols,
+    "vix_skew": vix_skew_cols,
+    "experimental_slope": experimental_slope_cols,
+    }
 
     # merge returns and features table into one df
     df_merged = pd.merge(ma_df, df_returns[[col for col in df_returns.columns if col.startswith('Return')] + ['Date']], on='Date') 
@@ -446,4 +457,4 @@ def pull_daily(ticker, returns):
 
     df = df_merged.sort_values('Date', ascending=False).copy()  # newest first
 
-    return df
+    return df, feature_cols
