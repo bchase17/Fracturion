@@ -75,7 +75,7 @@ def ma_features(df):
 
     return df
 
-def rsi_macd_features(df):
+def rsi(df):
 
     df = df.sort_values(by='Date', ascending=True)
 
@@ -95,26 +95,6 @@ def rsi_macd_features(df):
         df[f'RSI_21_{dif}'] = RSI(df, 21, dif)
         df[f'RSI_21_{dif}'] = RSI(df, 21, dif)
         df[f'RSI_21_{dif}'] = RSI(df, 21, dif)
-
-    # ================
-    # MACD
-    # ================
-    ema_fast = df['Close'].ewm(span=12, adjust=False).mean()
-    ema_slow = df['Close'].ewm(span=26, adjust=False).mean()
-    df['MACD'] = (ema_fast - ema_slow).round(3)
-    df['Signal_Line'] = df['MACD'].ewm(span=9, adjust=False).mean().round(3)
-    df['MACD'] = (df['MACD'] / df['Close']).round(4)
-    df['Signal_Line'] = (df['Signal_Line'] / df['Close']).round(4)
-
-    # ================
-    # Bollinger Bands
-    # ================
-    bb_mid = df['Close'].rolling(window=20).mean()
-    bb_std = df['Close'].rolling(window=20).std()
-    df['BB_Upper'] = (bb_mid + 2 * bb_std).round(3) / df['Close']
-    df['BB_Lower'] = (bb_mid - 2 * bb_std).round(3) / df['Close']
-    df['BB_Mid_raw'] = (bb_mid * bb_std / df['Close'])
-    df['BB_Mid'] = ((df['BB_Mid_raw'] - df['BB_Mid_raw'].rolling(42).mean()) / df['BB_Mid_raw'].rolling(42).std()).round(3)
 
     return df
 
@@ -184,7 +164,7 @@ def volume(df):
 
     return df
 
-def atr_adx_vol(df):
+def atr_adx(df):
 
     df = df.sort_values(by='Date', ascending=True)
 
@@ -224,6 +204,12 @@ def atr_adx_vol(df):
     df['plus_DI'] = plus_di.round(0)
     df['minus_DI'] = minus_di.round(0)
     df['ADX'] = adx.round(0)
+
+    return df
+
+def volatility(df):
+
+    df = df.sort_values(by='Date', ascending=True)
 
     # ================
     # Volatility
@@ -399,6 +385,32 @@ def generate_col_list(df):
 
     return cols
 
+def macd(df):
+
+    df = df.sort_values(by='Date', ascending=True)
+
+    # ================
+    # MACD
+    # ================
+    ema_fast = df['Close'].ewm(span=12, adjust=False).mean()
+    ema_slow = df['Close'].ewm(span=26, adjust=False).mean()
+    df['MACD'] = (ema_fast - ema_slow).round(3)
+    df['Signal_Line'] = df['MACD'].ewm(span=9, adjust=False).mean().round(3)
+    df['MACD'] = (df['MACD'] / df['Close']).round(4)
+    df['Signal_Line'] = (df['Signal_Line'] / df['Close']).round(4)
+
+    # ================
+    # Bollinger Bands
+    # ================
+    bb_mid = df['Close'].rolling(window=20).mean()
+    bb_std = df['Close'].rolling(window=20).std()
+    df['BB_Upper'] = (bb_mid + 2 * bb_std).round(3) / df['Close']
+    df['BB_Lower'] = (bb_mid - 2 * bb_std).round(3) / df['Close']
+    df['BB_Mid_raw'] = (bb_mid * bb_std / df['Close'])
+    df['BB_Mid'] = ((df['BB_Mid_raw'] - df['BB_Mid_raw'].rolling(42).mean()) / df['BB_Mid_raw'].rolling(42).std()).round(3)
+
+    return df
+
 exclude = {'Date', 'Close', 'High', 'Low', 'Volume'}
 
 def pull_daily(ticker, returns):
@@ -407,18 +419,22 @@ def pull_daily(ticker, returns):
 
     ma_df = ma_features(df_orig)
     ma_cols = generate_col_list(ma_df)
-    rsi_macd_df = rsi_macd_features(df_orig)
-    rsi_macd_cols = generate_col_list(rsi_macd_df)
+    rsi_df = rsi(df_orig)
+    rsi_cols = generate_col_list(rsi_df)
+    macd_df = macd(df_orig)
+    macd_cols = generate_col_list(macd_df)
     volume_df = volume(df_orig)
     volume_cols = generate_col_list(volume_df)
-    atr_adx_vol_df = atr_adx_vol(df_orig)
-    atr_adx_vol_cols = generate_col_list(atr_adx_vol_df)
+    atr_adx_df = atr_adx(df_orig)
+    atr_adx_cols = generate_col_list(atr_adx_df)
+    volatility_df = volatility(df_orig)
+    volatility_cols = generate_col_list(volatility_df)
     vix_skew_df = vix_skew(df_orig)
     vix_skew_cols = generate_col_list(vix_skew_df)
     experimental_slop_df = experimental_slop(df_orig)
     experimental_slop_cols = generate_col_list(experimental_slop_df)
 
-    feature_sets = [ma_df, volume_df, vix_skew_df, rsi_macd_df]
+    feature_sets = [ma_df, volume_df, macd_df, atr_adx_df]
 
     # merge returns and features table into one df
     df_merged = pd.merge(ma_df, df_returns[[col for col in df_returns.columns if col.startswith('Return')] + ['Date']], on='Date') 
