@@ -24,9 +24,9 @@ def ma_features(df):
         df[f'SMA_{sma_window}'] = df['Close'].rolling(window=sma_window).mean()
 
         # Current close relativet to n_day high | max 1
-        #df[f'Close_Rel_Max{sma_window}'] = (df['Close'] / df['High'].rolling(window=sma_window).max()).round(2)
+        df[f'Close_Rel_Max{sma_window}'] = (df['Close'] / df['High'].rolling(window=sma_window).max()).round(2)
         # Current close relativet to n_day low | min 1
-        #df[f'Close_Rel_Min{sma_window}'] = (df['Close'] / df['Low'].rolling(window=sma_window).min()).round(2)
+        df[f'Close_Rel_Min{sma_window}'] = (df['Close'] / df['Low'].rolling(window=sma_window).min()).round(2)
 
     lag_periods = [10, 25, 50, 100, 150, 200]
     for sma_window in sma_windows:
@@ -60,8 +60,8 @@ def ma_features(df):
 
     for window in [10, 30, 60, 120, 240]:
 
-        #df[f'Rel_Max_{window}'] = (df['High'] / df['High'].rolling(window=window).max()).round(2)
-        #df[f'Rel_Min_{window}'] = (df['Low'] / df['Low'].rolling(window=window).min()).round(2)
+        df[f'Rel_Max_{window}'] = (df['High'] / df['High'].rolling(window=window).max()).round(2)
+        df[f'Rel_Min_{window}'] = (df['Low'] / df['Low'].rolling(window=window).min()).round(2)
         df[f'Max_{window}_Rows_Since'] = df['High'].rolling(window=window).apply(rows_since_max, raw=True)
         df[f'Min_{window}_Rows_Since'] = df['Low'].rolling(window=window).apply(rows_since_min, raw=True)
 
